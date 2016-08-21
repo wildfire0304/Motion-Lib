@@ -1,1 +1,1 @@
-# demos of calender ,xunleiweb and pears 
+# demos of calender ,xunleiweb ,pears and canvasclock 
