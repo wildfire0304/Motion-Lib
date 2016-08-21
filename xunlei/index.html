@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>迅雷主页</title>
+	<style>
+		/* reset */
+		body, dl, dd, ul, ol, h1, h2, h3, h4, h5, h6, form, input, th, td, p { margin: 0; padding: 0;}
+		table {border-collapse:collapse;}
+		img { border: none; vertical-align: top;}
+		li { list-style: none;}
+		a { text-decoration: none;}
+		em{ font-style: normal;}
+		strong{ font-weight: normal;}
+		textarea{ resize: none; overflow: auto;}
+		input,textarea,select,lable{ outline: none; border: none;}
+		.clear{ zoom:1;}
+		.clear:after{ content: ""; display: block; clear: both;}
+
+
+		html { height: 100%;}
+		body { height: 100%; width: 100%; overflow: hidden;  background: rgba(0,0,0,0.8);}
+
+		.header { height: 90px; width: 100%; position: absolute; top: 0; left: 0; z-index: 3000;}
+		.header h1 { height: 90px; position: absolute; left: 0; top: 0; width: 220px; }
+		.header h1 a { height: 100%; width: 100%; text-align: center;display: block;}
+		.header h1 img { width: 130px; height: 70px; margin-top: 10px; }
+
+		.header ul { width: 520px; height: 90px; position: absolute; right: 0; top: 0;}
+		.header ul li { width: 140px; height: 46px; margin: 22px 10px; float: left; border: 2px solid rgba(255,255,255,0); }
+		.header ul li:nth-of-type(3) { width: 130px; z-index: 3000;}
+
+		.header ul li:hover { border: 2px solid rgba(255,255,255,0.6);}
+		.header li a { display: block; margin: 13px 16px; height: 20px; width: 100%; padding-left: 30px; background: url(xunlei/header_ico.png) 0 0 no-repeat; color: #fff; font-size: 18px; text-indent: 12px; color: #fff; }
+		.header li:nth-of-type(2) a { background-position: 0 -40px; }
+		.header li:nth-of-type(3) a { background-position: 0 -20px; }
+
+		.right_nav { width: 200px; height: 100%; background-color: rgba(0,0,0,0.5); position: absolute; right: -200px; top: 0; z-index: 3010; }
+		.right_nav ul { position: absolute; top: 110px; width: 100%; }
+		.right_nav li { height: 70px; font-size: 18px; color: #fff; width: 100%; text-indent: 4em; cursor: pointer;}
+		.right_nav span { width: 16px; height: 16px; border-radius: 100%; background-color: #00bfff; position: absolute; top: 110px; left: -9999px; }
+		
+		.main_nav { width: 280px; height: 88px; border-bottom: 2px solid rgba(255,255,255,0.4); position: absolute; top: 80%; left: 50%; z-index: 2000; margin-left: -140px; }
+		.main_nav a { width: 70px; height: 88px; float: left; background: url(xunlei/content_ico.png) 2px 5px no-repeat; }
+		.main_nav a:nth-of-type(1) { background-position: 2px 5px;}
+		.main_nav a:nth-of-type(2) { background-position: -108px 5px;}
+		.main_nav a:nth-of-type(3) { background-position: -214px 5px;}
+		.main_nav a:nth-of-type(4) { background-position: -398px 5px;}
+		.main_nav a:nth-of-type(1).active { background-position: 2px -103px;}
+		.main_nav a:nth-of-type(2).active { background-position: -108px -103px;}
+		.main_nav a:nth-of-type(3).active { background-position: -214px -103px;}
+		.main_nav a:nth-of-type(4).active { background-position: -398px -103px;}
+		.main_nav span { width: 70px; height: 4px; background-color: rgba(255,255,255,0.8); position: absolute; bottom: -3px; left: 0px;}
+		
+		.content { position: absolute; left: 0;top: 0; height: 100%; width: 100%;}
+		.content li{ position: absolute; width: 100%; height: 100%; background-size: 100% 100%; z-index: 3; top: 0; left: 0; }
+		.content li:nth-of-type(1) { background-image: url(xunlei/01.jpg); opacity: 1;}
+		.content li:nth-of-type(1) h2 { font-size: 42px; color: #000; font-weight: lighter; position: absolute; top: 50px; left: 50%; height: 42px; line-height: 42px; font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; opacity: 0;  width: 400px; text-align: center; margin-left: -200px;}
+		.content li:nth-of-type(1) h3 { height: 34px;  line-height: 34px; position: absolute; top: 92px; left: 50%; color: rgba(0,0,0,0.5); font-size: 16px; opacity: 0; width: 200px; text-align: center; margin-left: -100px;}
+		.content li:nth-of-type(1) a { position: absolute; width: 102px; height: 28px; border: 2px solid rgba(0,0,0,0.4); line-height: 28px; text-align: center; font-size: 14px; color: #000; left: 50%; top: 180px; opacity: 0; margin-left: -51px;}
+
+		.content li:nth-of-type(2) { background-image: url(xunlei/02.jpg); opacity: 0;}
+		.content li:nth-of-type(2) h2 { font-size: 42px; width: 42px; color: #fff; font-weight: lighter; position: absolute; top: 80px; left: 50%; line-height: 50px; font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; opacity: 0; margin-left: -21px;}
+		.content li:nth-of-type(2) h3 { width: 14px;  line-height: 20px; position: absolute; top: 192px; left: 50%; color: rgba(255,255,255,0.5); font-size: 14px; opacity: 0; margin-left: -7px; }
+		.content li:nth-of-type(2) a { position: absolute; width: 102px; height: 28px; border: 2px solid rgba(255,255,255,0.8); line-height: 28px; text-align: center; font-size: 14px; color: #fff; left: 50%; top: 400px; opacity: 0; margin-left: -51px; }
+
+		.content li:nth-of-type(3) { background-image: url(xunlei/03.jpg); opacity: 0; }
+		.content li:nth-of-type(3) h2 { font-size: 42px; color: #fff; font-weight: lighter; position: absolute; top: 100px; left: 50%; line-height: 50px; font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; letter-spacing: 14px; opacity: 0; width: 400px; text-align: center; margin-left: -200px;}
+		.content li:nth-of-type(3) span { font-size: 24px; font-weight: lighter; }
+		.content li:nth-of-type(3) a { position: absolute; width: 102px; height: 28px; border: 2px solid rgba(255,255,255,0.8); line-height: 28px; text-align: center; font-size: 14px; color: #fff; left: 50%; top: 220px; opacity: 0; margin-left: -51px; }
+
+		.content li:nth-of-type(4) { background-image: url(xunlei/04.jpg); opacity: 0; }
+		.content li:nth-of-type(4) h2 { font-size: 42px; color: #fff; font-weight: lighter; position: absolute; top: 50px; left: 50%; line-height: 50px; font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; letter-spacing: 4px; opacity: 0; width: 400px; text-align: center; margin-left: -200px;}
+		.content li:nth-of-type(4) a { position: absolute; width: 102px; height: 28px; border: 2px solid rgba(255,255,255,0.8); line-height: 28px; text-align: center; font-size: 14px; color: #fff; left: 50%; top: 150px; opacity: 0; margin-left: -51px;}
+
+	</style>
+	<script src="js/mTween.js"></script>
+	<script>
+		window.onload = function() {
+
+			// 先写主导航的效果 
+			var mainNav = document.querySelector(".main_nav");
+			var mainNavA = document.querySelectorAll(".main_nav a");
+
+			for (var i = 0; i < mainNavA.length; i++) {
+				mainNavA[i].index = i;
+			};
+			var mainNavLine = document.querySelector(".main_nav span");
+			var contentWrap = document.querySelectorAll(".content li");
+			var h2 = document.querySelectorAll(".content li h2");
+
+			for (var i = 0; i < h2.length; i++) {
+				h2[i].topPos = h2[i].offsetTop;
+
+			};
+			var h3 = document.querySelectorAll(".content li h3");
+			for (var i = 0; i < h3.length; i++) {
+				h3[i].topPos = h3[i].offsetTop;
+
+			};
+			var a = document.querySelectorAll(".content li a");
+			// for (var i = 0; i < a.length; i++) {
+			// 	a[i].topPos = a[i].offsetTop;
+			// };
+
+			var moreBtn = document.querySelector(".header li:nth-of-type(3)");
+			var rightNav = document.querySelector(".right_nav");
+
+			var rightNavDot = document.querySelector(".right_nav span");
+			var rightNavLi = document.querySelectorAll(".right_nav li");
+			var rightNavUl = document.querySelector(".right_nav ul");
+
+			moreBtn.onmouseover = function() {
+				mTween(rightNav,{right:0},300,"easeOutStrong");
+			};
+			rightNav.onmouseover = function() {
+				mTween(rightNav,{right:0},300,"easeOutStrong");
+			};
+			moreBtn.onmouseout = function() {
+				mTween(rightNav,{right:-200},300,"easeOutStrong");
+			};
+			rightNav.onmouseout = function() {
+				mTween(rightNav,{right:-200},300,"easeOutStrong");
+
+			};
+
+			rightNavUl.onmouseover = function() {
+				rightNavDot.style.left = "40px";
+			};
+			rightNavUl.onmouseout = function() {
+				rightNavDot.style.left = "-9999px";
+			};
+			for (var i = 0; i < rightNavLi.length; i++) {
+				rightNavLi[i].index = i;
+				rightNavLi[i].onmouseover = function() {
+					mTween(rightNavDot,{top:110 + 70*this.index},200,'linear');
+				};
+
+			};
+
+			var n = -1;
+			var zIndex = 4;
+			var timer = null;
+
+
+			clearInterval(timer);
+			timer = setInterval(function() {
+				n++; 
+				if (n == 4) {
+					n =0;
+				};
+				// 样式重置
+				
+				mainNavAction();
+			}, 2000);
+
+
+			n++;
+			mainNavAction();
+
+			function mainNavAction () {
+				
+				// 主导航的样式变化
+				for (var i = 0; i < mainNavA.length; i++) {
+					mainNavA[i].className = '';
+				};
+				mainNavA[n].className = 'active';
+
+
+				// 主导航滚动条的切换
+				mTween(mainNavLine,{left:n*70},300,'easeBothStrong');
+
+				// 主导航激活的页面显示为最上方
+				contentWrap[n].style.zIndex = zIndex;
+				zIndex++;
+
+				for (var i = 0; i < h3.length; i++) {
+					clearInterval(h3[i].timer);
+					h3[i].style.top = h3[i].topPos + "px";
+					h3[i].style.opacity = 0;
+					h3[i].className = "";
+				};
+				for (var i = 0; i < h2.length; i++) {
+					clearInterval(h2[i].timer);
+					h2[i].style.top = h2[i].topPos + "px";
+					h2[i].style.opacity = 0;
+					h2[i].className == "";
+
+				};
+				for (var i = 0; i < a.length; i++) {
+					clearInterval(a[i].timer);
+					a[i].style.opacity = 0;
+					a[i].className == "";
+				};
+
+				// 主导航激活的页面的透明度变化为1 
+				mTween(contentWrap[n],{opacity:1},300,'linear',function() {
+					// 主导航未激活的页面透明度为0
+					for (var i = 0; i < contentWrap.length; i++) {
+						if( i != n ){
+							contentWrap[i].style.opacity = 0;
+						}
+					};
+				});
+
+				// 内部元素移动
+				setTimeout(function() {
+
+					if (h3[n]) {
+						
+						mTween(h3[n],{top:h3[n].topPos + 40,opacity:1},400,"linear",function() {
+							h3[n].className = "active";
+						});
+					};
+					
+					mTween(h2[n],{top:h2[n].topPos + 40,opacity:1},400,"linear",function() {
+						h2[n].className = "active";
+					});
+					setTimeout(function() {
+						mTween(a[n],{opacity:1},300,"linear",function() {
+							a[n].className = "active";
+						});
+					}, 600);
+				}, 300);
+			}
+
+			// 鼠标移入导航时 定时器取消 移出时 重新添加定时器
+			for (var i = 0; i < mainNavA.length; i++) {
+				mainNavA[i].onmouseover = function() {
+					// 样式重置
+					
+					clearInterval(timer);
+					n = this.index;
+					mainNavAction();
+				};
+
+				mainNavA[i].onmouseout = function() {
+					timer = setInterval(function() {
+						n++; 
+						if (n == 4) {
+							n =0;
+						};
+						mainNavAction();
+					}, 2000);
+				};
+			};
+		}
+	</script>
+		
+	
+
+
+</head>
+<body>
+	<div class="header">
+		<h1><a href="javascript:;"><img src="xunlei/xunlei_ico.png"/></a></h1>
+		<ul>
+			<li><a href="javascript:;">产品中心</a></li>
+			<li><a href="javascript:;">新闻中心</a></li>
+			<li><a href="javascript:;">更多</a></li>
+		</ul>
+	</div>
+	<div class="right_nav">
+		<span></span>
+		<ul>
+			<li>星域CDN</li>
+			<li>人力资源</li>
+			<li>投资关系</li>
+			<li>关于迅雷</li>
+			<li>联系我们</li>
+		</ul>
+	</div>
+	<ul class="content">
+		<li>
+			<h2>炙热追片之心</h2>
+			<h3>没有Wi-Fi,也挡不住</h3>
+			<a href="#">手机迅雷</a>
+		</li>
+		<li>
+			<h2>极速</h2>
+			<h3>不止一次的挑战</h3>
+			<a href="#">迅雷7.9</a>
+		</li>
+		<li>
+			<h2>快,<span>让生活</span>慢<span>下来</span></h2>
+			<a href="#">迅雷会员</a>
+		</li>
+		<li>
+			<h2>流畅画质&nbsp;乐无止境</h2>
+			<a href="#">迅雷影音</a>
+		</li>	
+	</ul>			
+	<div class="main_nav">
+		<a href="javascript:;" title="迅雷9.0" class="active"></a>
+		<a href="javascript:;" title="手机迅雷"></a>
+		<a href="javascript:;" title="迅雷下载"></a>
+		<a href="javascript:;" title="迅雷影音"></a>
+		<span></span>
+	</div>
+</body>
+</html>
