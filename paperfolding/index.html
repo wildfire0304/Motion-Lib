@@ -32,7 +32,7 @@
 			var onOff = true;
 			timer = null;
 			for (var i = 0; i < divs.length; i++) {
-				divs[i].style.background = "rgba(0,0,0,0) url(demo4.png) 0 -" + i*50 + "px no-repeat";
+				divs[i].style.background = "rgba(0,0,0,0.5) url(demo4.png) 0 -" + i*50 + "px no-repeat";
 			};
 			document.onclick = function() {
 				if (timer) {
@@ -52,7 +52,6 @@
 				} else {
 					n = 11;
 					timer = setInterval(function() {
-						console.log("road2");
 						divs[n].className = "hide";
 						n--;
 						if ( n < 0) {
