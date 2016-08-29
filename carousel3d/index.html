@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>3d幻灯片</title>
+	<style>
+		body,ul,ol{margin:0;padding:0;}
+		li{ list-style:none;}
+		.wrap { width: 800px; margin: 50px auto; }
+		.wrap ul { width: 800px; height: 460px; perspective: 2000px; perspective-origin: center center; overflow: hidden;}
+		.wrap ul li { width: 50px; height: 460px;float: left; position: relative; transform-style: preserve-3d; transform:translateZ(-230px); transition: 1s;}
+		.wrap ul li a { width: 100%; height: 100%; position: absolute; left: 0;  top: 0;}
+		.wrap ul li span { width: 460px; height: 460px; position: absolute; background-color: #ffdead;}
+		.wrap ul li a:nth-of-type(1) { background: url(c3demo3/1.jpeg) no-repeat; transform:rotateX(0deg) translateZ(230px); background-size: auto 100%;}
+		.wrap ul li a:nth-of-type(2) { background: url(c3demo3/2.jpeg) no-repeat;transform:rotateX(90deg) translateZ(230px); background-size: auto 100%;}
+		.wrap ul li a:nth-of-type(3) { background: url(c3demo3/3.jpg) no-repeat;transform:rotateX(180deg) translateZ(230px); background-size: auto 100%;}
+		.wrap ul li a:nth-of-type(4) { background: url(c3demo3/4.jpg) no-repeat;transform:rotateX(-90deg) translateZ(230px); background-size: auto 100%;}
+		.wrap ul li span:nth-of-type(1) { transform-origin: left; left:0; transform: translateZ(-230px) rotateY(-90deg);}
+		.wrap ul li span:nth-of-type(2) { transform-origin: right; right:0; transform:translateZ(-230px) rotateY(90deg);}
+		.wrap ol { width: 800px; height: 60px; overflow: hidden; padding: 20px 0;}
+		.wrap ol li { width: 50px; height: 50px; float: left; font: 30px/50px arial; text-align: center; background: #f08080; color: #fff; border-radius: 50%; margin-left: 16px; cursor: pointer; transition: 1s; }
+		.wrap ol li:nth-of-type(1) { margin-left: 540px; }
+		.wrap ol li.active { color: #f08080; background-color: #fff; box-shadow:inset 0 0 10px #f08080;}
+	</style>
+	<script>
+		window.onload = function() {
+			var wrapUl = document.querySelector(".wrap ul");
+			var str = '';
+			var strCss = '';
+			var css = document.querySelector("style");
+			var iNow = 0;
+			var iZindex = 0;
+			for (var i = 0; i < 16; i++) {
+				i > 8? iZindex--:iZindex++;
+				str += "<li><a href='javascript:;'></a><a href='javascript:;'></a><a href='javascript:;'></a><a href='javascript:;'></a><span></span><span></span></li>";
+				strCss += ".wrap ul li:nth-of-type(" + (i+1) + ") a { background-position: -" + (i*50) + "px 0; z-index: }";
+				strCss += ".wrap ul li:nth-of-type(" + (i+1) + "){z-index: " + iZindex + ";}";
+			};
+			wrapUl.innerHTML += str;
+			css.innerHTML += strCss;
+			var lis = wrapUl.children;
+
+			var btns = document.querySelectorAll("ol li");
+			for (var i = 0; i < btns.length; i++) {
+				(function(a) {
+					btns[a].onclick = function() {
+						for (var i = 0; i < lis.length; i++) {
+							lis[i].style.transition = "0.5s " + i*50 +"ms";
+							lis[i].style.transform = "translateZ(-230px) rotateX(-" + 90*a + "deg)";
+						};
+						btns[iNow].className = "";
+						btns[a].className = "active"
+						iNow = a;
+					}
+				})(i);
+			};
+		}
+	</script>
+</head>
+<body>
+	<div class="wrap">
+		<ul>
+		</ul>
+		<ol>
+			<li class="active">1</li>	
+			<li>2</li>	
+			<li>3</li>	
+			<li>4</li>	
+		</ol>
+	</div>
+</body>
+</html>

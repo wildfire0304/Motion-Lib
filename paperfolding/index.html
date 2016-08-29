@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title></title>
+	<style>
+	@keyframes open{
+		0% { transform: rotateX(-120deg); opacity: 0;}
+		25% { transform: rotateX(30deg); opacity: 0.8;}
+		50% { transform: rotateX(15deg); opacity: 1;}
+		75% { transform: rotateX(-8deg); opacity: 1;}
+		100% { transform: rotateX(0deg); opacity: 1;}
+	}
+	@keyframes close
+	{
+		0% { transform:rotateX(0deg);opacity:1;}
+		100% { transform:rotateX(-120deg); opacity: 0;}
+	}
+	* { margin: 0; padding: 0; }
+	p { width: 600px; height: 40px; font: 30px/40px arial; background-color: #333; color: #333; text-shadow: 0 0 10px #fff; text-align: center; margin: 0 auto;}
+	.wrap { width: 600px; height: 600px; position: relative; margin: 0px auto; perspective: 800px; transform-style: preserve-3d;}
+	.wrap div {  transform-style: preserve-3d; position: absolute; top: 50px;left: 0; height: 50px; width: 600px; transform-origin: top; transform: rotateX(-120deg); opacity: 0;}
+	.wrap>div { top: 0;}
+	.wrap div.show { animation: 2s open; transform:rotateX(0deg); opacity: 1;}
+	.wrap div.hide{ animation: 0.8s close; transform:rotateX(90deg); opacity: 0;}
+	</style>
+
+	<script>
+		window.onload = function() {
+			var divs = document.querySelectorAll(".wrap div");
+			var n = 0;
+			var onOff = true;
+			timer = null;
+			for (var i = 0; i < divs.length; i++) {
+				divs[i].style.background = "rgba(0,0,0,0) url(demo4.png) 0 -" + i*50 + "px no-repeat";
+			};
+			document.onclick = function() {
+				if (timer) {
+					return;
+				}
+				if (onOff) {
+					n = 0;
+					timer = setInterval(function() {
+						divs[n].className = "show";
+						n++;
+						if ( n == divs.length) {
+						clearInterval(timer)
+						timer = null;
+						onOff = false;
+						}
+					}, 300);	
+				} else {
+					n = 11;
+					timer = setInterval(function() {
+						console.log("road2");
+						divs[n].className = "hide";
+						n--;
+						if ( n < 0) {
+						clearInterval(timer);
+						timer = null;
+						onOff = true;
+						}
+					}, 300);
+				}
+			};
+			setTimeout(function() {
+				document.onclick();
+			}, 2000);
+		};
+	</script>
+</head>
+<body>
+	<p>点击文档查看 展开和 收缩效果</p>
+	<div class="wrap">
+		<div>
+			<div>
+				<div>
+					<div>
+						<div>
+							<div>
+								<div>
+									<div>
+										<div>
+											<div>
+												<div>
+													<div></div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
