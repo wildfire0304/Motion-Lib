@@ -2,19 +2,65 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8" />
-	<title>js demos from wonderFF</title>
+	<title>demos by wonderff</title>
 	<style>
-		body { margin: 0; padding: 0; height: 100%; }
-		a { display: block; width: 400px; height: 50px; line-height: 50px; text-align: center; outline: none; text-decoration: none; margin: 20px auto; font-size: 32px;border-radius: 20px; transition: 1s;background-color: #f08080; color: #fff; border: 2px solid #fff; }
-		a:hover { color: #f08080; background-color: #fff; text-shadow: 0 0 10px #ddd; border: 2px solid #f08080; font-size: 32px; }
+	@keyframes move { 
+		0% { text-shadow: 0px 0px 1px rgba(0,0,0,0.2); opacity: 0;  }
+		25% { text-shadow: -6px 0px 10px #000,0px 0px 1px rgba(0,0,0,0.2); transform: translateX(80px); opacity: 0.6;}
+		50% { text-shadow: 0px 0px 10px #000,0px 0px 1px rgba(0,0,0,0.2); transform: translateX(160px); opacity: 1;}
+		75% { text-shadow: 6px 0px 10px #000,0px 0px 1px rgba(0,0,0,0.2); transform: translateX(240px); opacity: 0.6;}
+		100% { text-shadow: 0px 0px 1px rgba(0,0,0,0.2); transform: translateX(320px); opacity: 0;}
+	}
+	html { height: 100%;}
+	body { height: 100%; background-color: #d2b48c; position: relative; width: 200%;}
+	div { height: 100px; position: absolute; text-shadow: 0px 0px 2px rgba(0,0,0,0.2); opacity: 0; cursor:pointer;}
+	div a{ font:80px/100px arial; color: #d2b48c; text-decoration: none;}
+	div:nth-of-type(1) { left: 300px; top: 40px;}
+	div:nth-of-type(2) { left: 120px; top: 140px;}
+	div:nth-of-type(3) { left: 500px; top: 240px;}
+	div:nth-of-type(4) { left: 40px; top: 340px;}
+	div:nth-of-type(5) { left: 240px; top: 440px;}
+	div:nth-of-type(6) { left: 520px; top: 540px;}
+	.move { animation: move 2.0s 2.0s infinite linear;}
+	.move:hover { animation-play-state: paused;}
+
 	</style>
+	<script>
+	window.onload = function() {
+		var i = 0 ;
+		timer = null;
+		var divs = document.querySelectorAll("div");
+		timer = setInterval(function() {
+			divs[i].className = "move";
+			i++;
+			if (i == divs.length) {
+				clearInterval(timer);
+			}
+		}, 800);
+	};
+	</script>
 </head>
 <body>
-	<a href="killpears/killpears.html" target="_blank">岁月杀梨</a>
-	<a href="xunlei/index.html" target="_blank">迅雷主页</a>
-	<a href="calendarofwin/canlendar.html" target="_blank">windows系统日历</a>
-	<a href="aCanvasClock/canvasClock.html" target="_blank">粒子运动时钟</a>
-	<a href="carousel3d/index.html" target="_blank">3d轮播图</a>
-	<a href="paperfolding/index.html" target="_blank">折纸demo</a>
+	<div>
+		<a href="killpears/killpears.html" target="_blank">梨的苍老demo</a>
+	</div>
+	<div>
+		<a href="xunlei/index.html" target="_blank">迅雷主页demo</a>
+	</div>
+	<div>
+		<a href="aCanvasClock/canvasClock.html" target="_blank">粒子时钟demo</a>
+		
+	</div>
+	<div>
+		<a href="calendarofwin/canlendar.html" target="_blank">windows日历demo</a>
+		
+	</div>
+	<div>
+		<a href="carousel3d/index.html" target="_blank">3d轮播demo</a>
+		
+	</div>	
+	<div>
+		<a href="paperfolding/index.html" target="_blank">折纸demo</a>
+	</div>
 </body>
 </html>
