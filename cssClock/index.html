@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>css3做一个表盘</title>
+	<style>
+		.wrap { width: 200px; height: 200px; border: 2px solid #999; margin: 100px auto; position: relative;box-shadow:0 0 0 4px #999,0 0 90px #999; border-radius: 50%;}
+		ul { margin: 0; padding: 0; list-style: none; overflow: hidden; height: 200px; position: relative;}
+		li { width: 2px; height: 8px; background-color: #000; position: absolute; left: 99px; top: 0; transform-origin: center 100px;}
+		ul li:nth-of-type(5n+1) { height: 12px;}
+		ul li:nth-of-type(1) { transform: rotate(0deg);}
+		ul li:nth-of-type(2) { transform: rotate(6deg);}
+		ul li:nth-of-type(3) { transform: rotate(12deg);}
+		ul li:nth-of-type(4) { transform: rotate(18deg);}
+		ul li:nth-of-type(5) { transform: rotate(24deg);}
+		.logo { width: 80px; height: 20px; line-height: 20px; font-size: 16px; color: #fff; background-color: #f04545; text-align: center; position: absolute; top: 120px; left: 60px; transform: scale(0.8);}
+		#hour { width: 6px; height: 50px; position: absolute; left: 97px; top: 50px; background-color: #000; transform-origin: bottom; z-index: 2; }
+		#min { width: 4px; height: 66px; position: absolute; left: 98px; top: 34px; background-color: #999; transform-origin: bottom; z-index: 2;}
+		#sec { width: 2px; height: 76px; position: absolute; left: 99px; top: 24px; background-color: red; transform-origin: bottom; z-index: 2; }
+		.ico { width: 10px;height: 10px; background-color: #ddd; position: absolute; left: 95px; top: 95px; border-radius: 50%; z-index: 5;}
+	</style>
+</head>
+<body>
+	<div class="wrap">
+		<ul id="list">
+		</ul>
+		<div id="hour"></div>
+		<div id="min"></div>
+		<div id="sec"></div>
+		<div class="ico"></div>
+		<div class="logo">茄子总动员</div>
+	</div>
+	<script>
+		var ul = document.querySelector("#list");
+		var css = document.querySelector("style");
+		var lis = "";
+		var liCss = "";
+		for (var i = 0; i < 60; i++) {
+			lis+= "<li></li>"
+			liCss += "ul li:nth-of-type(" + (i+1) + "){ transform: rotate(" + i*6 + "deg);}"
+		};
+		ul.innerHTML = lis;
+		css.innerHTML += liCss;
+		newClock ();
+		setInterval(newClock, 1000);
+		function newClock () {
+			var sec = document.querySelector("#sec");
+			var min = document.querySelector("#min");
+			var hour = document.querySelector("#hour");
+			var curDate = new Date(2016,9,4,22,50,00);
+			console.log(curDate - new Date())
+
+			var iSec = new Date((curDate - new Date())).getSeconds();
+			var iMin = new Date((curDate - new Date())).getMinutes() + iSec/60;
+			var iHour = 0;
+			sec.style.transform = "rotate(" + iSec*6 + "deg)";
+			min.style.transform = "rotate(" + iMin*6 + "deg)";
+			hour.style.transform = "rotate(" + iHour*30 + "deg)";
+		}
+	</script>
+</body>
+</html>
