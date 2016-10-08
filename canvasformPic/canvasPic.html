@@ -6,89 +6,92 @@
 	<style>
 	canvas { display: block; border: 1px solid #fff; margin: 20px auto;}
 	</style>
-<script>
+	<script>
 /*
 * t : time 已过时间
 * b : begin 起始值
 * c : count 总的运动值
 * d : duration 持续时间
 */
-Math.elasticOut = function(t, b, c, d, s){
-	if (typeof s == 'undefined') {
-		s = 3.70158;  //回缩的距离
+
+	Math.elasticOut = function(t, b, c, d, s){
+		if (typeof s == 'undefined') {
+			s = 3.70158;  //回缩的距离
+		}
+		return c*((t=t/d-1)*t*((s+1)*t + s) + 1) + b;
 	}
-	return c*((t=t/d-1)*t*((s+1)*t + s) + 1) + b;
-}
-window.onload = function() {
-	var canvas = document.querySelector("canvas");
-	canvas.height = 600;
-	canvas.width = 1000;
-	var ct = canvas.getContext("2d");
-	var img = new Image();
-	img.src = "1.jpg";
-	var imgD = null;
-	var particles = [];
 
-	img.onload = function() {
-		ct.drawImage(img,0,0,img.width,img.height,0,0,1000,600);	
-		imgD = ct.getImageData(0,0,canvas.width,canvas.height);
+		window.onload = function() {
+			var canvas = document.querySelector("canvas");
+			canvas.height = 600;
+			canvas.width = 1000;
+			var ct = canvas.getContext("2d");
+			var img = new Image();
+			img.src = "1.jpg";
+			var imgD = null;
+			var particles = [];
 
-		var cows = 250;
-		var rows = 200;
-		// 10个
-		var w = parseInt(imgD.width/cows); 
-		var wIndex = Math.round(parseInt(imgD.width/cows)/2); 
+			img.onload = function() {
+				ct.drawImage(img,0,0,img.width,img.height,0,0,1000,600);	
+				imgD = ct.getImageData(0,0,canvas.width,canvas.height);
 
-		// 10个
-		var h = parseInt(imgD.height/rows);
-		var hIndex = Math.round(parseInt(imgD.height/rows)/2); 
+				var cows = 250;
+				var rows = 200;
 
-		var now = new Date().getTime();
+				// 10个
+				var w = parseInt(imgD.width/cows); 
+				var wIndex = Math.round(parseInt(imgD.width/cows)/2); 
 
-		for (var i = 0; i < rows; i++) {
-			for (var j = 0; j < cows; j++) {
-				pos = i*h*imgD.width + j*w + wIndex;
-				var color = "rgba(" + imgD.data[pos*4] + "," + imgD.data[pos*4+1] + "," + imgD.data[pos*4+2] + ",1)"
-				var start = now + Math.round(Math.random()*3)*1000*Math.round(Math.random()*2);
-				var particle = {
-					sl: Math.round(Math.random()*1000),
-					st: Math.round(Math.random()*600),
-					// l: j*w + Math.round(Math.random()*w),
-					// t: i*h + Math.round(Math.random()*h),
-					l: j*w + wIndex + Math.round(Math.random()),
-					t: i*h + hIndex + Math.round(Math.random()),
-					start: start,
-					duration: -Math.round(Math.random()*10),
-					c: color
+				// 10个
+				var h = parseInt(imgD.height/rows);
+				var hIndex = Math.round(parseInt(imgD.height/rows)/2); 
+
+				var now = new Date().getTime();
+
+				for (var i = 0; i < rows; i++) {
+					for (var j = 0; j < cows; j++) {
+						pos = i*h*imgD.width + j*w + wIndex;
+						var color = "rgba(" + imgD.data[pos*4] + "," + imgD.data[pos*4+1] + "," + imgD.data[pos*4+2] + ",1)"
+						var start = now + Math.round(Math.random()*3)*1000*Math.round(Math.random()*2);
+						var particle = {
+							sl: Math.round(Math.random()*1000),
+							st: Math.round(Math.random()*600),
+							// l: j*w + Math.round(Math.random()*w),
+							// t: i*h + Math.round(Math.random()*h),
+							l: j*w + wIndex + Math.round(Math.random()),
+							t: i*h + hIndex + Math.round(Math.random()),
+							start: start,
+							duration: -Math.round(Math.random()*10),
+							c: color
+						}
+						particles.push(particle);
+					};
+				};
+				draw();
+
+				function draw () {
+					// console.log(1);
+					var time = new Date().getTime();
+					var _p = null;
+					ct.clearRect(0,0,canvas.width,canvas.height);
+					ct.fillStyle = '#000';
+					ct.fillRect(0,0,canvas.width,canvas.height);
+					for (var i = 0; i < particles.length; i++) {
+						_p =  particles[i];
+						if (_p.duration < 100 ) {
+							_p.duration += 1;
+							_p.sl = Math.elasticOut(_p.duration,_p.sl,_p.l-_p.sl,100);
+							_p.st = Math.elasticOut(_p.duration,_p.st,_p.t-_p.st,100);	
+						};
+						ct.fillStyle = _p.c;
+						ct.fillRect(_p.sl,_p.st,2,2);
+							
+					};
+					requestAnimationFrame(draw);
 				}
-				particles.push(particle);
 			};
 		};
-		draw();
-
-		function draw () {
-			// console.log(1);
-			var time = new Date().getTime();
-			var _p = null;
-			ct.clearRect(0,0,canvas.width,canvas.height);
-			ct.fillStyle = '#000';
-			ct.fillRect(0,0,canvas.width,canvas.height);
-			for (var i = 0; i < particles.length; i++) {
-				_p =  particles[i];
-				if (_p.duration < 100 ) {
-					_p.duration += 1;
-					_p.sl = Math.elasticOut(_p.duration,_p.sl,_p.l-_p.sl,100);
-					_p.st = Math.elasticOut(_p.duration,_p.st,_p.t-_p.st,100);	
-				};
-				ct.fillStyle = _p.c;
-				ct.fillRect(_p.sl,_p.st,2,2);
-					
-			};
-			requestAnimationFrame(draw);
-		}
-	};
-};
-</script>
+	</script>
 </head>
 <body>
 	<canvas></canvas>
