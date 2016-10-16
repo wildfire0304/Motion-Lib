@@ -1,62 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8" />
-	<title>Document</title>
+    <meta charset="UTF-8" />
+    <title>Document</title>
 </head>
 <body>
-	<svg viewBox="0 0 800 500" width="800" height="500" >
-		<defs>
-			<pattern id="geZ" width="20" height="20" patternUnits="userSpaceOnUse">
-				<path d="M0 0 V 20 H 20" stroke-width="1" stroke="#eee" fill="#fff"/>
-			</pattern>
-		</defs>
-
-		<linearGradient id="cor1" gradientUnits="objectBoundingBox" x1="0" y1="0" x2="1" y2="0">
-	      <stop offset="0" stop-color="red"/>
-	      <stop offset="0.2" stop-color="orange"/>
-	      <stop offset="0.4" stop-color="yellow"/>
-	      <stop offset="0.6" stop-color="green"/>
-	      <stop offset="0.8" stop-color="blue"/>
-	      <stop offset="1" stop-color="purple"/>
-	  	</linearGradient>
-
-		<rect x="0" y="0" width="800" height="500" fill="url(#geZ)" stroke="#999" stroke-width="1"/>
-		<text id="text1" x="0" y="300" fill="url(#cor1)" style="font-size:20px; font-family:arial;">两只茄子两只茄子跑的快跑的快一只没有眼睛 一只没有尾巴真奇怪真奇怪</text>
+    <svg viewBox="0 0 800 500" width="800" height="500" >
+        <defs>
+            <pattern id="geZ" width="20" height="20" patternUnits="userSpaceOnUse">
+                <path d="M0 0 V 20 H 20" stroke-width="1" stroke="#eee" fill="#fff"/>
+            </pattern>
+        </defs>
+        <defs>
+            <linearGradient id="cor1" gradientUnits="objectBoundingBox" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="red"/>
+              <stop offset="0.2" stop-color="orange"/>
+              <stop offset="0.4" stop-color="yellow"/>
+              <stop offset="0.6" stop-color="green"/>
+              <stop offset="0.8" stop-color="blue"/>
+              <stop offset="1" stop-color="purple"/>
+            </linearGradient>
+        </defs>
+        <rect x="0" y="0" width="800" height="500" fill="url(#geZ)" stroke="#999" stroke-width="1"/>
+        <text id="text1" x="0" y="300" fill="url(#cor1)" style="font-size:20px; font-family:arial;">两只茄子两只茄子跑的快跑的快一只没有眼睛 一只没有尾巴真奇怪真奇怪</text>
     </svg>
     <script>
-    	var tx = document.querySelector("#text1");
-    	var dx = [];
-    	var dy = null;
-    	var i = 34;
-    	var t = 0;
-    	while (i--) {
-    		dx.push(4);
-    	}
-    	function arrangeDy (A,W,T) {
-    		dy = [];
-    		var ly = 0;
-    		var cy = 0;
-   			for (var i = 0; i < 34; i++) {
-   				cy = -A * Math.sin( W * i * 20 + t );
-   				dy.push( cy - ly );
-   				ly = cy;
-   			}; 
-    	}
+        var tx = document.querySelector("#text1");
+        var dx = [];
+        var dy = null;
+        var i = 34;
+        var t = 0;
+        while (i--) {
+            dx.push(4);
+        }
+        function arrangeDy (A,W,T) {
+            dy = [];
+            var ly = 0;
+            var cy = 0;
+            for (var i = 0; i < 34; i++) {
+                cy = -A * Math.sin( W * i * 20 + t );
+                dy.push( cy - ly );
+                ly = cy;
+            }; 
+        }
 
-    	function render () {
-    		tx.setAttribute("dx",dx.join(" "));
-    		tx.setAttribute("dy",dy.join(" "));
-    	}
-    	
+        function render () {
+            tx.setAttribute("dx",dx.join(" "));
+            tx.setAttribute("dy",dy.join(" "));
+        }
+        
 
-    	function frame () {
-    		t += 0.04;
-    		arrangeDy (80,0.03,t) 
-    		render();
-    		requestAnimationFrame(frame);
-    	}
-    	frame ();
+        function frame () {
+            t += 0.04;
+            arrangeDy (80,0.03,t) 
+            render();
+            requestAnimationFrame(frame);
+        }
+        frame ();
 
     </script>
 </body>
