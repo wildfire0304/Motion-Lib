@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Document</title>
+	<style>
+	body {
+		/*background-color: #ffda89;*/
+	}
+	svg {
+		display: block;
+		width: 1800px;
+		height: auto;
+		margin: 0 auto;
+		/*font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;*/
+	}
+	</style>
+	<script>
+		window.onload = function() {
+			document.querySelector("svg").style.width = window.innerWidth + "px";
+			document.querySelector("svg").style.height = window.innerHeight + "px";
+		};
+	</script>
+	<script>
+		var chartSeries = {
+			title: "title",
+			data: {
+				// items: ["1","2","3","4","5","6","7","8","9"],
+				series: [
+					{
+						id: "ID_189",
+						value: [12.56,12.67,837.1,22.33,12,10.33,7.23,8.67,1986.67]
+					},
+					{
+						id: "ID_198",
+						value: [208.46,12.5,660.98,70,26.5,17.5,8.5,19.78,1846.67]
+					},
+					{
+						id: "compare",
+						value: [300, 30,2000,100,50,40,20,30,3000]
+					}
+				]
+			}	
+		};
+	</script>
+</head>
+<body>
+
+	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" id="chart_1">
+
+		<defs>
+			<linearGradient id="cor1" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1080" y2="0">
+		      <stop offset="0" stop-color="hsl(0,100%,60%)"/>
+		      <stop offset="0.1" stop-color="hsl(30,100%,60%)"/>
+		      <stop offset="0.2" stop-color="hsl(60,100%,60%)"/>
+		      <stop offset="0.3" stop-color="hsl(90,100%,60%)"/>
+		      <stop offset="0.4" stop-color="hsl(120,100%,60%)"/>
+		      <stop offset="0.5" stop-color="hsl(160,100%,60%)"/>
+		      <stop offset="0.6" stop-color="hsl(180,100%,60%)"/>
+		      <stop offset="0.7" stop-color="hsl(210,100%,60%)"/>
+		      <stop offset="0.8" stop-color="hsl(240,100%,60%)"/>
+		      <stop offset="0.9" stop-color="hsl(270,100%,60%)"/>
+		      <stop offset="1" stop-color="hsl(300,100%,60%)"/>
+		  	</linearGradient>
+		</defs>
+		<defs>
+			<pattern id="geZ" width="20" height="20" patternUnits="userSpaceOnUse">
+				<path d="M0 0 V 20 H 20" stroke-width="1" stroke="tan" fill="none"/>
+			</pattern>
+		</defs>
+
+		
+		<g id="coordinate" transform="translate(0,80)">
+			
+			<rect x="200" y="118" width="1081" height="580" fill="url(#geZ)" stroke="none" stroke-width="0"/>
+			<g id="x_coor" transform="translate(0,-300)">
+				<line x1="190" y1="700" x2="1300" y2="700" stroke="#000" stroke-width="1"/>	
+				<line x1="1300" y1="700" x2="1290" y2="710" stroke="#000" stroke-width="1"/>	
+				<line x1="1300" y1="700" x2="1290" y2="690" stroke="#000" stroke-width="1"/>	
+			</g>
+			<g id="y_coor">
+				<line x1="200" y1="100" x2="200" y2="710" stroke="#000" stroke-width="1"/>
+				<line x1="200" y1="100" x2="190" y2="110" stroke="#000" stroke-width="1"/>
+			</g>
+			<g id="x_dot">
+			</g>
+			<g id="y_dot" transform="translate(200,400)">
+				<text x="-20" y="2" fill="#000" text-anchor="middle" dominant-baseline="middle">0</text>
+			</g>
+		</g>
+		<g id="legend" transform="translate(1340,430)"  font-family="arial">
+			<rect rx="20" width="120" height="80" fill="#fff" stroke="tan" stroke-width="1" transform="translate(0,8)"/>
+			<g id="group_1" transform="translate(10,20)"> 
+				<rect rx="12" width="24" height="24" fill="#00bfff" stroke="none" stroke-width="0"/>
+				<text  x="64" y="14" fill="#333" font-size="18" text-anchor="middle" dominant-baseline="middle">
+					ID_189
+				</text>
+			</g>
+			<g id="group_2" transform="translate(10,50)" >
+				<rect rx="12" width="24" height="24" fill="#f08080" stroke="none" stroke-width="0"/>
+				<text  x="64" y="14" fill="#333" font-size="18" text-anchor="middle" dominant-baseline="middle">
+					ID_198
+				</text>
+			</g>
+		</g>
+		<g id="title">
+			<text x="700" y="120" fill="#333" font-size="30" text-anchor="middle" dominant-baseline="middle">
+				触控设备的用户习惯特征数据统计
+			</text>
+		</g>
+
+		<!-- <g id="baseline">
+			<line x1="180" y1="479.5" x2="1300" y2="479.5" stroke="#fff" stroke-width="1"/>
+		</g> -->
+		
+		<g id="series_1" transform="translate(200,0)">
+			<g transform="translate(60,0)">
+				<path id="path_1" d="M 0 480 L 60 480" stroke-width="1" stroke="#00bfff" fill="url(#cor1)" opacity="0.7"/>
+			</g>
+			<g id="data_group_1" transform="translate(60,0)">	
+			</g>
+		</g>
+
+		<g id="series_2"transform="translate(260,0)">
+			<g >
+				<path id="path_2" d="M 0 480 L 60 480" stroke-width="1" stroke="#f08080" fill="url(#cor1)" opacity="0.6"/>
+			</g>
+			<g id="data_group_2">	
+			</g>
+		</g>
+	</svg>
+
+<script>
+
+var SVG_NS = "http://www.w3.org/2000/svg";
+var XLINK_NS = "http://www.w3.org/1999/xlink";
+var HORIZONTAL = 480;
+var XDISTANCE = 120;
+var YDISTANCE = 300;
+var chart_1 = document.querySelector("chart_1");
+// function use (origin) {
+// 	var _use = document.createElementNS(SVG_NS, "use");
+// 	_use.setAttributeNS(XLINK_NS, "xlink:href", "#" + origin.id);
+// 	return _use;
+// }
+// renderXaxis (chartSeries.data.items,document.querySelector("#x_dot")) ;
+function renderXaxis (arr,par) {
+
+	arr.forEach(function(e,i) {
+
+		var module_str = `<g id="x_item1" transform="translate(${XDISTANCE*i-40},0)">
+			<line x1="300" y1="700" x2="300" y2="706" stroke="#000" stroke-width="1"/>
+			<text x="300" y="700" fill="#000" font-size="16" text-anchor="middle" dominant-baseline="middle" >
+				${e}
+			</text>
+		</g>`;
+		par.innerHTML += module_str;
+	})	
+};
+var arr = [159.56,16.67,857.1,62.33,18,16.33,7.33,18.67,1986.67];
+var arr1 = [208.46,12.5,660.98,70,26.5,17.5,8.5,19.78,1846.67]
+var com =  [300, 30,2000,100,50,40,20,30,3000];
+var arr = arr.map(function(e,i) {
+	return {
+		left: i*XDISTANCE,
+		top: HORIZONTAL - Math.round(e/com[i] * 300)
+	}
+});
+var arr1 = arr1.map(function(e,i) {
+	return {
+		left: i*XDISTANCE,
+		top: HORIZONTAL + Math.round(e/com[i] * 300)
+	}
+});
+renderPoint (arr, document.querySelector("#data_group_1"),"#00bfff")
+function renderPoint (arr, par,cor) {
+	arr.forEach(function(e,i) {
+		var module_str = `<circle r="6" cx="${e.left}" cy="${e.top}" fill="${cor}" stroke="#fff" stroke-width="2"/>`;
+		par.innerHTML += module_str;
+	});
+}
+renderPoint (arr1, document.querySelector("#data_group_2"),"#f08080");
+renderLine (arr,document.querySelector("#path_1"))
+function renderLine (arr, par,cor) {
+	var module_str = `M -60 480`;
+	arr.forEach(function(e,i) {
+		module_str += `L ${e.left} ${e.top}`;
+	});
+	module_str += `L 1020 480`;
+	par.setAttribute("d", module_str);
+}
+renderLine (arr1,document.querySelector("#path_2"))
+	
+</script>
+</body>
+</html>

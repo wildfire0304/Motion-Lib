@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Document</title>
+	<style>
+	body {
+		/*background-color: #ffda89;*/
+		width: 100vw;
+		height: 100vh;
+		overflow: hidden;
+	}
+	svg {
+		display: block;
+		height: auto;
+		margin: 0 auto;
+		/*font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;*/
+	}
+	</style>
+	<script>
+		window.onload = function() {
+			document.querySelector("svg").style.width = window.innerWidth + "px";
+			document.querySelector("svg").style.height = window.innerHeight + "px";
+		};
+	</script>
+	<script>
+		var chartSeries = {
+			title: "title",
+			data: {
+				items: ["1","2","3","4","5","6","7","8","9"],
+				series: [
+					{
+						id: "ID_189",
+						value: [159.56,16.67,857.1,62.33,18,16.33,7.33,18.67,1986.67]
+					},
+					{
+						id: "ID_198",
+						value: [208.46,12.5,660.98,70,26.5,17.5,8.5,19.78,1846.67]
+					},
+					{
+						id: "compare",
+						value: [300, 30,2000,100,50,40,20,30,3000]
+					}
+				]
+			}	
+		};
+	</script>
+</head>
+<body>
+
+	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" id="chart_1">
+
+		<defs>
+			<radialGradient id="gra1" gradientUnits="objectBoundingBox" fx="0.3" fy="0.3" cx="0.5" cy="0.5" r="0.5" >
+	          <stop offset="0" stop-color="#fff"/>
+	          <stop offset="1" stop-color="#f08080"/>
+	      	</radialGradient>
+		</defs>
+
+		<defs>
+			<radialGradient id="gra2" gradientUnits="objectBoundingBox" fx="0.3" fy="0.3" cx="0.5" cy="0.5" r="0.5" >
+	          <stop offset="0" stop-color="#fff"/>
+	          <stop offset="1" stop-color="#00bfff"/>
+	      	</radialGradient>
+		</defs>
+
+		<defs>
+			<pattern id="geZ" width="20" height="20" patternUnits="userSpaceOnUse">
+				<path d="M0 0 V 20 H 20" stroke-width="1" stroke="tan" fill="none"/>
+			</pattern>
+		</defs>
+		
+		<g id="coordinate" transform="translate(0,80)">
+			
+			<rect x="200" y="118" width="1081" height="580" fill="url(#geZ)" stroke="none" stroke-width="0"/>
+			<g id="x_coor">
+				<line x1="190" y1="700" x2="1300" y2="700" stroke="#000" stroke-width="1"/>	
+				<line x1="1300" y1="700" x2="1290" y2="710" stroke="#000" stroke-width="1"/>	
+			</g>
+			<g id="x_dot">
+			</g>
+			<g id="y_dot">
+			</g>
+		</g>
+		<g id="legend" transform="translate(1340,400)"  font-family="arial">
+			<rect rx="20" width="120" height="80" fill="#fff" stroke="tan" stroke-width="1" transform="translate(0,8)"/>
+			<g id="group_1" transform="translate(10,20)"> 
+				<rect rx="12" width="24" height="24" fill="url(#gra2)" stroke="none" stroke-width="0"/>
+				<text  x="64" y="14" fill="#333" font-size="18" text-anchor="middle" dominant-baseline="middle">
+					ID_189
+				</text>
+			</g>
+			<g id="group_2" transform="translate(10,50)" >
+				<rect rx="12" width="24" height="24" fill="url(#gra1)" stroke="none" stroke-width="0"/>
+				<text  x="64" y="14" fill="#333" font-size="18" text-anchor="middle" dominant-baseline="middle">
+					ID_198
+				</text>
+			</g>
+		</g>
+		<g id="title">
+			<text x="700" y="120" fill="#333" font-size="30" text-anchor="middle" dominant-baseline="middle">
+				触控设备的用户习惯特征数据统计
+			</text>
+		</g>
+		
+		<g id="series_1" transform="translate(280,200)">
+			
+		</g>
+		<g id="series_2" transform="translate(280,200)">
+			
+		</g>
+		
+	</svg>
+
+<script>
+
+var SVG_NS = "http://www.w3.org/2000/svg";
+var XLINK_NS = "http://www.w3.org/1999/xlink";
+var HORIZONTAL = 480;
+var XDISTANCE = 120;
+var YDISTANCE = 300;
+
+
+
+
+
+
+var chart_1 = document.querySelector("chart_1");
+
+
+renderXaxis (chartSeries.data.items,document.querySelector("#x_dot")) ;
+function renderXaxis (arr,par) {
+
+	arr.forEach(function(e,i) {
+		var module_str = `<g id="x_item1" transform="translate(${XDISTANCE*i-20},0)">
+			<line x1="300" y1="700" x2="300" y2="706" stroke="#000" stroke-width="1"/>
+			<text x="300" y="730" fill="#000" font-size="16" text-anchor="middle" dominant-baseline="middle">
+				${e}
+			</text>
+		</g>`;
+		par.innerHTML += module_str;
+	})	
+};
+
+
+
+var arr = [159.56,16.67,857.1,62.33,18,16.33,7.33,18.67,1986.67];
+var arr1 = [208.46,12.5,660.98,70,26.5,17.5,8.5,19.78,1846.67]
+var com =  [300, 30,2000,100,50,40,20,30,3000];
+// <circle r="40" cx="0" cy="100" fill="#f00" stroke="#ff0" stroke-width="1"/>
+
+
+var posAndBasicR = arr.map(function(e,i) {
+	return {
+		top: 100 + Math.round(Math.random()*400),
+		radius: 30 + Math.round(Math.random()*100)
+	}
+})
+
+var arr = arr.map(function(e,i) {
+	return {
+		left: i*XDISTANCE,
+		top: posAndBasicR[i].top,
+		color1: "url(#gra2)",
+		rbasic: posAndBasicR[i].radius,
+		scale1: (e/com[i]).toFixed(3),
+		scale2: (arr1[i]/com[i]).toFixed(3),
+		color2: "url(#gra1)"
+	}
+});
+
+
+
+
+renderCircle1 (arr,document.querySelector("#series_2"));
+renderCircle2 (arr,document.querySelector("#series_1"));
+function renderCircle1 (arr,par) {
+	arr.forEach(function(e,i) {
+		if (e.scale1 < e.scale2) {
+			e.scale = e.scale1;
+			e.color = e.color1;
+		}else {
+			e.scale = e.scale2;
+			e.color = e.color2;
+		}
+		
+		var module_str = ` <circle r="${e.rbasic*e.scale}" cx="${e.left}" cy="${e.top}" fill="${e.color}" stroke="none" stroke-width="0" opacity="1"/>`;
+		par.innerHTML += module_str;
+	});
+}
+function renderCircle2 (arr,par) {
+	arr.forEach(function(e,i) {
+		if (e.scale1 > e.scale2) {
+			e.scale = e.scale1;
+			e.color = e.color1;
+		}else {
+			e.scale = e.scale2;
+			e.color = e.color2;
+		}
+		
+		var module_str = ` <circle r="${e.rbasic*e.scale}" cx="${e.left}" cy="${e.top}" fill="${e.color}" stroke="none" stroke-width="0" opacity="1"/>`;
+		par.innerHTML += module_str;
+	});
+}
+
+
+
+	
+</script>
+</body>
+</html>
