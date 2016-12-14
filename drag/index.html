@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>document</title>
+<meta charset="UTF-8" />
+<meta name='x5-orientation' content='landscape'/>
+<meta name='x5-full-screen' content='yes'/>
+<meta content="telephone=no" name="format-detection">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<link rel="stylesheet" href="./css/reset.css" />
+<style>
+	body {
+		overflow-x: hidden;
+		overflow-y: hidden;
+		background: #8b0000;
+		height: 4rem;
+		padding: 0.25rem 0;
+		overflow: hidden;
+	}
+	#wrap {
+		position: relative;
+		width: 8rem;
+		height: 4rem;
+		border: 1px solid #000;
+		
+	}
+
+	#wrap li {
+		position: absolute;
+		top: 0;
+		left: 0;
+		padding: .05rem;
+		box-sizing: border-box;
+		-webkit-transition: 1s cubic-bezier(.55,-0.2,.7,1.42);
+		opacity: .2;
+		filter: blur(10px);
+		overflow: hidden;	
+	}
+	#wrap li div {
+		width: 100%;
+		height: 100%;
+		background-color: #fff;
+		text-align: center;
+		color: #800000;
+		font: 1rem/1rem arial;
+		-webkit-transition: 1s border-radius ease-out;
+		border-radius: 0px;
+	}
+
+
+</style>
+</head>
+<body>
+
+	<ul id="wrap">
+	</ul>
+	
+<script>
+
+
+
+	Node.prototype.css = function(param1,param2){	
+		if (typeof param1 === 'object') {
+			for (attr in param1) {
+				this.style[attr] = param1[attr];
+			}
+			return this;
+			
+		} else if (param2 === undefined) {
+			return getComputedStyle(this)[param1];
+		} else {
+			this.style[param1] = param2;
+			return this;
+		} 
+	};
+
+	Node.prototype.attr = function(param1,param2){	
+		if (typeof param1 === 'object') {
+			for (attr in param1) {
+				this.style[attr] = param1[attr];
+				this.setAttribute(attr, param1[attr])
+			}
+			return this;
+			
+		} else if (param2 === undefined) {
+			return this.getAttribute(param1);
+		} else {
+			this.setAttribute(param1, param2);
+			return this;
+		} 
+	};
+
+	Node.prototype.on = function(type, callback, capture){
+ 		this.addEventListener(type, callback, !!capture);
+ 		return this;
+	};
+
+	Node.prototype.off = function(type, callback, capture){
+ 		this.removeEventListener(type, callback, !!capture);
+ 		return this;
+	};
+
+	Node.prototype.addC = function(param) {
+		this.classList.add(param);
+		return this;
+	};
+
+	Node.prototype.remC = function(param) {
+		this.classList.remove(param);
+		return this;
+	};
+
+	Node.prototype.togC = function(param) {
+		this.classList.toggle(param);
+		return this;
+	};
+ 	
+ 	var __ = {
+
+ 		// 事件兼容	
+ 		start: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)? "touchstart": "mousedown",
+ 		move:/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)? "touchmove": "mousemove",
+ 		end:  /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)? "touchend": "mouseup",
+
+ 		// 事件绑定
+ 		on: function(obj, type, callback, capture){
+ 			return obj.addEventListener(type, callback, !!capture);
+ 		},
+ 		off: function(obj, type, callback, capture){
+ 			return obj.removeEventListener(type, callback, !!capture);
+ 		},
+
+ 		// 选择器
+ 		qs: function(sel1,sel2){
+ 			// sel1 必选参数, sel2 可选参数
+ 			if (sel2 !== undefined) {
+ 				if ( sel1.querySelectorAll(sel2).length > 1 ) {
+ 					return sel1.querySelectorAll(sel2);
+ 				} else {
+ 					return sel1.querySelector(sel2);
+ 				}
+ 			}else {
+ 				if ( document.querySelectorAll(sel1).length > 1 ) {
+ 					return document.querySelectorAll(sel1);
+ 				} else {
+ 					return document.querySelector(sel1);
+ 				}
+ 			}
+ 		},
+ 	};
+
+   
+</script>
+<script>
+
+document.on(__.start, function(ev){ 
+	ev.preventDefault(); 
+});
+
+
+/*______________________wonderff____________________init______________*/ 
+var REM = Math.max( window.innerWidth / 8 );
+
+
+var data = [
+	{"row":0,"col":0,"sizex":1,"sizey":1},
+	{"row":0,"col":1,"sizex":1,"sizey":1},
+	{"row":0,"col":2,"sizex":2,"sizey":1},
+	{"row":1,"col":0,"sizex":1,"sizey":1},
+	{"row":1,"col":1,"sizex":1,"sizey":1},
+	{"row":1,"col":2,"sizex":2,"sizey":1},
+	{"row":2,"col":0,"sizex":2,"sizey":1},
+	{"row":3,"col":0,"sizex":2,"sizey":1},
+	{"row":0,"col":4,"sizex":2,"sizey":2},
+	{"row":0,"col":6,"sizex":2,"sizey":1},
+	{"row":2,"col":2,"sizex":2,"sizey":2},
+	{"row":1,"col":6,"sizex":2,"sizey":1},
+	{"row":2,"col":4,"sizex":2,"sizey":1},
+	{"row":2,"col":6,"sizex":2,"sizey":1},
+	{"row":3,"col":4,"sizex":1,"sizey":1},
+	{"row":3,"col":5,"sizex":1,"sizey":1},
+	{"row":3,"col":6,"sizex":1,"sizey":1},
+	{"row":3,"col":7,"sizex":1,"sizey":1}
+];
+
+
+__.qs("html").css("fontSize", REM + "px");
+__.qs("body").css("fontSize", "12px");
+
+
+
+
+
+/*______________________wonderff____________________func realize______*/ 
+
+
+function renderStyle (obj,json) {
+
+	obj.css({
+		top: json.row * REM  + "px",
+		left: json.col * REM  + "px",
+		width: json.sizex * REM  + "px",
+		height: json.sizey * REM  + "px",
+		filter: "blur(0px)",
+		opacity: .8
+	}).attr({
+		row: json.row,
+		col: json.col,
+		sizex: json.sizex,
+		sizey: json.sizey
+	}).children[0].css({
+		borderRadius: "20px",
+		lineHeight: json.sizey * REM * 0.9 + "px",
+		fontSize: json.sizey * REM/2 + "px"
+	})
+}
+
+function drag (obj) {
+
+	obj.on( __.start,function(ev) {
+
+		if (ev.targetTouches.length === 1) {
+			obj.tapTimeout = null;
+
+			obj.tapTimeout = setTimeout(function() {
+
+				var identifier =  ev.changedTouches[0].identifier;
+
+				obj.posX = ev.changedTouches[0].pageX - obj.offsetLeft;
+				obj.posY = ev.changedTouches[0].pageY - obj.offsetTop;
+
+				obj.css({
+					zIndex: 2,
+					transition: '0s'
+				})
+
+				function addMove (ev) {
+
+					// 手指识别(避免幽灵识别)
+					if ( ev.changedTouches[0].identifier !== identifier) {
+						return;
+					};
+
+					obj.css({
+						left: ev.changedTouches[0].pageX - obj.posX + "px",
+						top: ev.changedTouches[0].pageY - obj.posY + "px"
+					});
+				}
+				function removeMove (ev) {
+					
+					/*
+						这里的坐标限制
+						* 整点限制
+						* 边界限制  
+						* 网格限制	
+					*/
+
+
+					var limitX = Math.round((ev.pageX - obj.posX)/REM);
+					var limitY = Math.round((ev.pageY - obj.posY)/REM);
+
+					limitX = Math.max(0,limitX) && Math.min(limitX, 8 - obj.attr('sizex'));
+					limitY = Math.max(0,limitY) && Math.min(limitY, 4 - obj.attr('sizey'));
+
+					limitX = Math.floor( limitX / obj.attr('sizex') ) * obj.attr('sizex');
+					limitY = Math.floor( limitY / obj.attr('sizey') ) * obj.attr('sizey');
+
+					obj.css({
+						transitionDuration: ".6s",
+						left: limitX * REM + "px",
+						top: limitY * REM + "px"
+					})
+
+					/*
+						根据limitX limitY sizex sizey 检测对应的DOM 
+
+						条件：
+
+					*/
+					var nodes = __.qs("#wrap").children;
+					var arr = [];
+
+					for (var i = 0; i < nodes.length; i++) {
+						arr.push(nodes[i]);
+					};
+
+					arr = arr.filter(function(e,i) {
+						// 行判断
+						var bool1 = e.attr("row") >= limitY && e.attr("row") < limitY + obj.attr('sizey')*1;
+
+						// 列判断
+						var bool2 = e.attr("col") >= limitX && e.attr("col") < limitX + obj.attr('sizex')*1;
+						
+						if ( bool1 && bool2 ) {
+							return e;
+						};
+
+					});
+
+					var target = {
+						row: [],
+						col: []
+					};
+					
+					if ( arr.length > 1) {
+
+						//这种情况适用于大图拖动到小图 				
+						arr.forEach(function(e) {
+							target.row.push(e.attr('row')*1);
+							target.col.push(e.attr('col')*1);
+						});
+						target.row = Math.min(...target.row);
+						target.col = Math.min(...target.col);
+						arr.forEach(function(e,i) {
+							e.css({
+								top: (obj.attr('row')*1 + e.attr('row')*1 - target.row)*REM + 'px',
+								left: (obj.attr('col')*1 + e.attr('col')*1 - target.col)* REM + 'px',
+								transition: '1s ' + i*100 + 'ms cubic-bezier(.55,-0.2,.7,1.42)'
+							}).attr({
+								row: obj.attr('row')*1 + e.attr('row')*1 - target.row,
+								col: obj.attr('col')*1 + e.attr('col')*1 - target.col
+							});
+						});
+
+						obj.attr({
+							row : target.row,
+							col : target.col
+						});
+					} else if ( arr.length === 1 ){
+
+						target.row =  arr[0].attr('row');
+						target.col = arr[0].attr('col');
+
+						if ( arr[0].attr('sizex') === obj.attr('sizex') && arr[0].attr('sizey') === obj.attr('sizey') ) {
+							arr[0].css({
+								top: (obj.attr('row')*1) * REM + 'px',
+								left: (obj.attr('col')*1) * REM + 'px',
+								WebkitTransform: '1s cubic-bezier(.55,-0.2,.7,1.42)'
+							}).attr({
+								row: obj.attr('row'),
+								col: obj.attr('col')
+							});
+
+							obj.attr({
+								row: target.row,
+								col: target.col
+							})
+						} else {
+							obj.css({
+								transitionDuration: ".6s",
+								left: obj.attr('col') * REM + "px",
+								top: obj.attr('row') * REM + "px"
+							})
+						}
+
+					} else {
+
+						obj.css({
+							transitionDuration: ".6s",
+							left: obj.attr('col') * REM + "px",
+							top: obj.attr('row') * REM + "px"
+						})
+
+					}
+					
+					// 大的往小的放 length 为多组;
+
+					// 大小相同 或者小的往大的左上角放 length 为1；
+
+					// 小的往大的的非左上角放  length 为0;
+					
+					document.off(__.move, addMove);
+					document.off(__.end,removeMove);
+				}
+				document.on(__.move,addMove)
+				document.on(__.end,removeMove);
+			}, 300);
+		} else {
+			obj.dis =  (Math.sqrt( Math.pow( ev.targetTouches[0].screenX - ev.targetTouches[1].screenX, 2) + Math.pow( ev.targetTouches[0].screenY - ev.targetTouches[1].screenY, 2))).toFixed(2);	
+		}
+
+		
+	});
+
+	obj.on(__.move, function(ev) {
+
+		clearTimeout(obj.tapTimeout);
+
+		if (ev.targetTouches.length !== 1 ) {
+			obj.scale =  (Math.sqrt( Math.pow( ev.targetTouches[0].screenX - ev.targetTouches[1].screenX, 2) + Math.pow( ev.targetTouches[0].screenY - ev.targetTouches[1].screenY, 2)) / obj.dis).toFixed(2);
+
+			if (obj.scale > 2) {
+				obj.css({
+					top: 0,
+					left: 0,
+					width: 8*REM + 'px',
+					height: 4*REM + 'px',
+					opacity:1,
+					zIndex: 3,
+					WebkitTransform: '1s cubic-bezier(.55,-0.2,.7,1.42)'	
+				})
+			};
+
+			if (obj.scale < 0.5) {
+				obj.css({
+					top: obj.attr('row')*REM + 'px',
+					left: obj.attr('col')*REM + 'px',
+					width: obj.attr('sizex')*REM + 'px',
+					height: obj.attr('sizey')*REM + 'px',
+					opacity: 0.8,
+					zIndex: 0	
+				})
+			}
+
+			
+		}
+	})
+}
+
+
+
+function renderDOM (props, par) {
+	for (var i = 0; i < props.length; i++) {
+		var li = document.createElement("li");
+		li.innerHTML = "<div>" + i + "</div>";
+		li.index = i;
+		renderStyle(li,props[i]);
+		drag(li);
+		par.appendChild(li);
+	};
+}
+
+/*______________________wonderff____________________func use______*/ 
+renderDOM (data, document.querySelector("#wrap"))
+
+
+</script>
+</body>
+</html>
