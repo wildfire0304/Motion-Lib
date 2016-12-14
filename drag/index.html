@@ -3,8 +3,9 @@
 <head>
 <title>document</title>
 <meta charset="UTF-8" />
-<meta name='x5-orientation' content='landscape'/>
-<meta name='x5-full-screen' content='yes'/>
+<meta name='x5-orientation' content='portrait'/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="x5-fullscreen" content="true">
 <meta content="telephone=no" name="format-detection">
 <meta content="yes" name="apple-mobile-web-app-capable">
 <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
@@ -21,9 +22,7 @@
 	#wrap {
 		position: relative;
 		width: 8rem;
-		height: 4rem;
-		border: 1px solid #000;
-		
+		height: 4rem;		
 	}
 
 	#wrap li {
@@ -158,281 +157,295 @@ document.on(__.start, function(ev){
 	ev.preventDefault(); 
 });
 
+window.onorientationchange = function() {
+	window.onload();
+};
 
-/*______________________wonderff____________________init______________*/ 
-var REM = Math.max( window.innerWidth / 8 );
-
-
-var data = [
-	{"row":0,"col":0,"sizex":1,"sizey":1},
-	{"row":0,"col":1,"sizex":1,"sizey":1},
-	{"row":0,"col":2,"sizex":2,"sizey":1},
-	{"row":1,"col":0,"sizex":1,"sizey":1},
-	{"row":1,"col":1,"sizex":1,"sizey":1},
-	{"row":1,"col":2,"sizex":2,"sizey":1},
-	{"row":2,"col":0,"sizex":2,"sizey":1},
-	{"row":3,"col":0,"sizex":2,"sizey":1},
-	{"row":0,"col":4,"sizex":2,"sizey":2},
-	{"row":0,"col":6,"sizex":2,"sizey":1},
-	{"row":2,"col":2,"sizex":2,"sizey":2},
-	{"row":1,"col":6,"sizex":2,"sizey":1},
-	{"row":2,"col":4,"sizex":2,"sizey":1},
-	{"row":2,"col":6,"sizex":2,"sizey":1},
-	{"row":3,"col":4,"sizex":1,"sizey":1},
-	{"row":3,"col":5,"sizex":1,"sizey":1},
-	{"row":3,"col":6,"sizex":1,"sizey":1},
-	{"row":3,"col":7,"sizex":1,"sizey":1}
-];
+window.onload = function() {
+	/*______________________wonderff____________________init______________*/ 
+	var REM = Math.max( window.innerWidth / 8 );
 
 
-__.qs("html").css("fontSize", REM + "px");
-__.qs("body").css("fontSize", "12px");
+	var data = [
+		{"row":0,"col":0,"sizex":1,"sizey":1},
+		{"row":0,"col":1,"sizex":1,"sizey":1},
+		{"row":0,"col":2,"sizex":2,"sizey":1},
+		{"row":1,"col":0,"sizex":1,"sizey":1},
+		{"row":1,"col":1,"sizex":1,"sizey":1},
+		{"row":1,"col":2,"sizex":2,"sizey":1},
+		{"row":2,"col":0,"sizex":2,"sizey":1},
+		{"row":3,"col":0,"sizex":2,"sizey":1},
+		{"row":0,"col":4,"sizex":2,"sizey":2},
+		{"row":0,"col":6,"sizex":2,"sizey":1},
+		{"row":2,"col":2,"sizex":2,"sizey":2},
+		{"row":1,"col":6,"sizex":2,"sizey":1},
+		{"row":2,"col":4,"sizex":2,"sizey":1},
+		{"row":2,"col":6,"sizex":2,"sizey":1},
+		{"row":3,"col":4,"sizex":1,"sizey":1},
+		{"row":3,"col":5,"sizex":1,"sizey":1},
+		{"row":3,"col":6,"sizex":1,"sizey":1},
+		{"row":3,"col":7,"sizex":1,"sizey":1}
+	];
+
+
+	__.qs("html").css("fontSize", REM + "px");
+	__.qs("body").css("fontSize", "12px");
 
 
 
 
 
-/*______________________wonderff____________________func realize______*/ 
+	/*______________________wonderff____________________func realize______*/ 
 
 
-function renderStyle (obj,json) {
+	function renderStyle (obj,json) {
 
-	obj.css({
-		top: json.row * REM  + "px",
-		left: json.col * REM  + "px",
-		width: json.sizex * REM  + "px",
-		height: json.sizey * REM  + "px",
-		filter: "blur(0px)",
-		opacity: .8
-	}).attr({
-		row: json.row,
-		col: json.col,
-		sizex: json.sizex,
-		sizey: json.sizey
-	}).children[0].css({
-		borderRadius: "20px",
-		lineHeight: json.sizey * REM * 0.9 + "px",
-		fontSize: json.sizey * REM/2 + "px"
-	})
-}
+		obj.css({
+			top: json.row * REM  + "px",
+			left: json.col * REM  + "px",
+			width: json.sizex * REM  + "px",
+			height: json.sizey * REM  + "px",
+			filter: "blur(0px)",
+			opacity: .8
+		}).attr({
+			row: json.row,
+			col: json.col,
+			sizex: json.sizex,
+			sizey: json.sizey
+		}).children[0].css({
+			borderRadius: "20px",
+			lineHeight: json.sizey * REM * 0.9 + "px",
+			fontSize: json.sizey * REM/2 + "px"
+		})
+	}
 
-function drag (obj) {
+	function drag (obj) {
 
-	obj.on( __.start,function(ev) {
+		obj.on( __.start,function(ev) {
 
-		if (ev.targetTouches.length === 1) {
-			obj.tapTimeout = null;
+			if (ev.targetTouches.length === 1) {
+				obj.tapTimeout = null;
 
-			obj.tapTimeout = setTimeout(function() {
+				obj.tapTimeout = setTimeout(function() {
 
-				var identifier =  ev.changedTouches[0].identifier;
+					var identifier =  ev.changedTouches[0].identifier;
 
-				obj.posX = ev.changedTouches[0].pageX - obj.offsetLeft;
-				obj.posY = ev.changedTouches[0].pageY - obj.offsetTop;
-
-				obj.css({
-					zIndex: 2,
-					transition: '0s'
-				})
-
-				function addMove (ev) {
-
-					// 手指识别(避免幽灵识别)
-					if ( ev.changedTouches[0].identifier !== identifier) {
-						return;
-					};
+					obj.posX = ev.changedTouches[0].pageX - obj.offsetLeft;
+					obj.posY = ev.changedTouches[0].pageY - obj.offsetTop;
 
 					obj.css({
-						left: ev.changedTouches[0].pageX - obj.posX + "px",
-						top: ev.changedTouches[0].pageY - obj.posY + "px"
-					});
-				}
-				function removeMove (ev) {
-					
-					/*
-						这里的坐标限制
-						* 整点限制
-						* 边界限制  
-						* 网格限制	
-					*/
-
-
-					var limitX = Math.round((ev.pageX - obj.posX)/REM);
-					var limitY = Math.round((ev.pageY - obj.posY)/REM);
-
-					limitX = Math.max(0,limitX) && Math.min(limitX, 8 - obj.attr('sizex'));
-					limitY = Math.max(0,limitY) && Math.min(limitY, 4 - obj.attr('sizey'));
-
-					limitX = Math.floor( limitX / obj.attr('sizex') ) * obj.attr('sizex');
-					limitY = Math.floor( limitY / obj.attr('sizey') ) * obj.attr('sizey');
-
-					obj.css({
-						transitionDuration: ".6s",
-						left: limitX * REM + "px",
-						top: limitY * REM + "px"
+						zIndex: 2,
+						transition: '0s',
+					}).children[0].css({
+						boxShadow: 'inset 0 0 20px #555'
 					})
 
-					/*
-						根据limitX limitY sizex sizey 检测对应的DOM 
+					function addMove (ev) {
 
-						条件：
-
-					*/
-					var nodes = __.qs("#wrap").children;
-					var arr = [];
-
-					for (var i = 0; i < nodes.length; i++) {
-						arr.push(nodes[i]);
-					};
-
-					arr = arr.filter(function(e,i) {
-						// 行判断
-						var bool1 = e.attr("row") >= limitY && e.attr("row") < limitY + obj.attr('sizey')*1;
-
-						// 列判断
-						var bool2 = e.attr("col") >= limitX && e.attr("col") < limitX + obj.attr('sizex')*1;
-						
-						if ( bool1 && bool2 ) {
-							return e;
+						// 手指识别(避免幽灵识别)
+						if ( ev.changedTouches[0].identifier !== identifier) {
+							return;
 						};
 
-					});
-
-					var target = {
-						row: [],
-						col: []
-					};
-					
-					if ( arr.length > 1) {
-
-						//这种情况适用于大图拖动到小图 				
-						arr.forEach(function(e) {
-							target.row.push(e.attr('row')*1);
-							target.col.push(e.attr('col')*1);
+						obj.css({
+							left: ev.changedTouches[0].pageX - obj.posX + "px",
+							top: ev.changedTouches[0].pageY - obj.posY + "px"
 						});
-						target.row = Math.min(...target.row);
-						target.col = Math.min(...target.col);
-						arr.forEach(function(e,i) {
-							e.css({
-								top: (obj.attr('row')*1 + e.attr('row')*1 - target.row)*REM + 'px',
-								left: (obj.attr('col')*1 + e.attr('col')*1 - target.col)* REM + 'px',
-								transition: '1s ' + i*100 + 'ms cubic-bezier(.55,-0.2,.7,1.42)'
-							}).attr({
-								row: obj.attr('row')*1 + e.attr('row')*1 - target.row,
-								col: obj.attr('col')*1 + e.attr('col')*1 - target.col
+					}
+					function removeMove (ev) {
+						
+						/*
+							这里的坐标限制
+							* 整点限制
+							* 边界限制  
+							* 网格限制	
+						*/
+
+
+						var limitX = Math.round((ev.pageX - obj.posX)/REM);
+						var limitY = Math.round((ev.pageY - obj.posY)/REM);
+
+						limitX = Math.max(0,limitX) && Math.min(limitX, 8 - obj.attr('sizex'));
+						limitY = Math.max(0,limitY) && Math.min(limitY, 4 - obj.attr('sizey'));
+
+						limitX = Math.floor( limitX / obj.attr('sizex') ) * obj.attr('sizex');
+						limitY = Math.floor( limitY / obj.attr('sizey') ) * obj.attr('sizey');
+
+						obj.css({
+							transitionDuration: ".6s",
+							left: limitX * REM + "px",
+							top: limitY * REM + "px"
+						}).children[0].css({
+							boxShadow: ''
+						});
+
+						/*
+							根据limitX limitY sizex sizey 检测对应的DOM 
+
+							条件：
+
+						*/
+						var nodes = __.qs("#wrap").children;
+						var arr = [];
+
+						for (var i = 0; i < nodes.length; i++) {
+							arr.push(nodes[i]);
+						};
+
+						arr = arr.filter(function(e,i) {
+							// 行判断
+							var bool1 = e.attr("row") >= limitY && e.attr("row") < limitY + obj.attr('sizey')*1;
+
+							// 列判断
+							var bool2 = e.attr("col") >= limitX && e.attr("col") < limitX + obj.attr('sizex')*1;
+							
+							if ( bool1 && bool2 ) {
+								return e;
+							};
+
+						});
+
+						var target = {
+							row: [],
+							col: []
+						};
+						
+						if ( arr.length > 1) {
+
+							//这种情况适用于大图拖动到小图 				
+							arr.forEach(function(e) {
+								target.row.push(e.attr('row')*1);
+								target.col.push(e.attr('col')*1);
 							});
-						});
-
-						obj.attr({
-							row : target.row,
-							col : target.col
-						});
-					} else if ( arr.length === 1 ){
-
-						target.row =  arr[0].attr('row');
-						target.col = arr[0].attr('col');
-
-						if ( arr[0].attr('sizex') === obj.attr('sizex') && arr[0].attr('sizey') === obj.attr('sizey') ) {
-							arr[0].css({
-								top: (obj.attr('row')*1) * REM + 'px',
-								left: (obj.attr('col')*1) * REM + 'px',
-								WebkitTransform: '1s cubic-bezier(.55,-0.2,.7,1.42)'
-							}).attr({
-								row: obj.attr('row'),
-								col: obj.attr('col')
+							target.row = Math.min(...target.row);
+							target.col = Math.min(...target.col);
+							arr.forEach(function(e,i) {
+								e.css({
+									top: (obj.attr('row')*1 + e.attr('row')*1 - target.row)*REM + 'px',
+									left: (obj.attr('col')*1 + e.attr('col')*1 - target.col)* REM + 'px',
+									transition: '1s ' + i*100 + 'ms cubic-bezier(.55,-0.2,.7,1.42)'
+								}).attr({
+									row: obj.attr('row')*1 + e.attr('row')*1 - target.row,
+									col: obj.attr('col')*1 + e.attr('col')*1 - target.col
+								})
 							});
 
 							obj.attr({
-								row: target.row,
-								col: target.col
-							})
+								row : target.row,
+								col : target.col
+							});
+						} else if ( arr.length === 1 ){
+
+							target.row =  arr[0].attr('row');
+							target.col = arr[0].attr('col');
+
+							if ( arr[0].attr('sizex') === obj.attr('sizex') && arr[0].attr('sizey') === obj.attr('sizey') ) {
+								arr[0].css({
+									top: (obj.attr('row')*1) * REM + 'px',
+									left: (obj.attr('col')*1) * REM + 'px',
+									WebkitTransform: '1s cubic-bezier(.55,-0.2,.7,1.42)'
+								}).attr({
+									row: obj.attr('row'),
+									col: obj.attr('col')
+								});
+
+								obj.attr({
+									row: target.row,
+									col: target.col
+								})
+							} else {
+								obj.css({
+									transitionDuration: ".6s",
+									left: obj.attr('col') * REM + "px",
+									top: obj.attr('row') * REM + "px"
+								})
+							}
+
 						} else {
+
 							obj.css({
 								transitionDuration: ".6s",
 								left: obj.attr('col') * REM + "px",
 								top: obj.attr('row') * REM + "px"
 							})
+
 						}
+						
+						// 大的往小的放 length 为多组;
 
-					} else {
+						// 大小相同 或者小的往大的左上角放 length 为1；
 
-						obj.css({
-							transitionDuration: ".6s",
-							left: obj.attr('col') * REM + "px",
-							top: obj.attr('row') * REM + "px"
-						})
-
+						// 小的往大的的非左上角放  length 为0;
+						
+						document.off(__.move, addMove);
+						document.off(__.end,removeMove);
 					}
-					
-					// 大的往小的放 length 为多组;
-
-					// 大小相同 或者小的往大的左上角放 length 为1；
-
-					// 小的往大的的非左上角放  length 为0;
-					
-					document.off(__.move, addMove);
-					document.off(__.end,removeMove);
-				}
-				document.on(__.move,addMove)
-				document.on(__.end,removeMove);
-			}, 300);
-		} else {
-			obj.dis =  (Math.sqrt( Math.pow( ev.targetTouches[0].screenX - ev.targetTouches[1].screenX, 2) + Math.pow( ev.targetTouches[0].screenY - ev.targetTouches[1].screenY, 2))).toFixed(2);	
-		}
-
-		
-	});
-
-	obj.on(__.move, function(ev) {
-
-		clearTimeout(obj.tapTimeout);
-
-		if (ev.targetTouches.length !== 1 ) {
-			obj.scale =  (Math.sqrt( Math.pow( ev.targetTouches[0].screenX - ev.targetTouches[1].screenX, 2) + Math.pow( ev.targetTouches[0].screenY - ev.targetTouches[1].screenY, 2)) / obj.dis).toFixed(2);
-
-			if (obj.scale > 2) {
-				obj.css({
-					top: 0,
-					left: 0,
-					width: 8*REM + 'px',
-					height: 4*REM + 'px',
-					opacity:1,
-					zIndex: 3,
-					WebkitTransform: '1s cubic-bezier(.55,-0.2,.7,1.42)'	
-				})
-			};
-
-			if (obj.scale < 0.5) {
-				obj.css({
-					top: obj.attr('row')*REM + 'px',
-					left: obj.attr('col')*REM + 'px',
-					width: obj.attr('sizex')*REM + 'px',
-					height: obj.attr('sizey')*REM + 'px',
-					opacity: 0.8,
-					zIndex: 0	
-				})
+					document.on(__.move,addMove)
+					document.on(__.end,removeMove);
+				}, 300);
+			} else {
+				obj.dis =  (Math.sqrt( Math.pow( ev.targetTouches[0].screenX - ev.targetTouches[1].screenX, 2) + Math.pow( ev.targetTouches[0].screenY - ev.targetTouches[1].screenY, 2))).toFixed(2);	
 			}
 
 			
-		}
-	})
-}
+		});
+
+		obj.on(__.move, function(ev) {
+
+			clearTimeout(obj.tapTimeout);
+
+			if (ev.targetTouches.length !== 1 ) {
+				obj.scale =  (Math.sqrt( Math.pow( ev.targetTouches[0].screenX - ev.targetTouches[1].screenX, 2) + Math.pow( ev.targetTouches[0].screenY - ev.targetTouches[1].screenY, 2)) / obj.dis).toFixed(2);
+
+				if (obj.scale > 2) {
+					obj.css({
+						top: 0,
+						left: 0,
+						width: 8*REM + 'px',
+						height: 4*REM + 'px',
+						opacity:1,
+						zIndex: 3,
+						WebkitTransform: '1s cubic-bezier(.55,-0.2,.7,1.42)'	
+					})
+				};
+
+				if (obj.scale < 0.5) {
+					obj.css({
+						top: obj.attr('row')*REM + 'px',
+						left: obj.attr('col')*REM + 'px',
+						width: obj.attr('sizex')*REM + 'px',
+						height: obj.attr('sizey')*REM + 'px',
+						opacity: 0.8,
+						zIndex: 0	
+					})
+				}
+
+				
+			}
+		})
+	}
 
 
 
-function renderDOM (props, par) {
-	for (var i = 0; i < props.length; i++) {
-		var li = document.createElement("li");
-		li.innerHTML = "<div>" + i + "</div>";
-		li.index = i;
-		renderStyle(li,props[i]);
-		drag(li);
-		par.appendChild(li);
-	};
-}
+	function renderDOM (props, par) {
+		par.innerHTML = '';
+		for (var i = 0; i < props.length; i++) {
+			var li = document.createElement("li");
+			li.innerHTML = "<div>" + i + "</div>";
+			li.index = i;
+			renderStyle(li,props[i]);
+			drag(li);
+			par.appendChild(li);
+		};
+	}
 
-/*______________________wonderff____________________func use______*/ 
-renderDOM (data, document.querySelector("#wrap"))
+	/*______________________wonderff____________________func use______*/ 
+	renderDOM (data, document.querySelector("#wrap"))
+};
+
+
+
+
 
 
 </script>
